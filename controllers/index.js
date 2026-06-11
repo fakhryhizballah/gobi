@@ -2,7 +2,7 @@ const Document = require('../models/Document');
 
 const getAllDocuments = async (req, res) => {
   try {
-    const { user } = req.body;
+    const { user } = req.params;
     if (!user) {
       return res.status(401).json({ error: 'User is Required' });
     }
