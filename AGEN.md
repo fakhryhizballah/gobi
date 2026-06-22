@@ -34,3 +34,7 @@ GOBI/
 ├── routes/         # Definisi Endpoints Express (Koneksi antara path & controller)
 ├── app.js          # Konfigurasi Express (Middlewares, Route mounting)
 └── server.js       # Entry point (Inisialisasi koneksi DB & menjalankan server)
+
+```
+## 4. Feature Utama (Core Features)
+
