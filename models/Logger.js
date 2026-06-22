@@ -13,7 +13,11 @@ const loggerSchema = new mongoose.Schema(
         level: {
             type: String,
             required: true
-        }
+        },
+        date: {
+            type: Date,
+            default: Date.now
+        },
     },
     { strict: false },
     { timestamps: true }

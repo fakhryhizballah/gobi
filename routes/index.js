@@ -16,7 +16,7 @@ router.put('/v1/dokumen/:id', verifyToken, controller.updateDocument);
 
 router.post('/v1/upload/file/gaji', upload_file_excel.single('filename'), media.file);
 
-router.get('/v1/logs', verifyToken, logger.getAllLogs);
+router.get('/v1/logs', logger.getAllLogs);
 router.post('/v1/logs', logger.createLog);
 
 module.exports = router;
