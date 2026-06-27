@@ -6,6 +6,10 @@ const gajiSchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    status: {
+      type: String,
+      required: true
+    },
     nama_pegawai: {
       type: String,
       required: true
@@ -19,6 +23,6 @@ const gajiSchema = new mongoose.Schema(
   { timestamps: true }
 );
 // Membuat kombinasi nama_pegawai dan periode menjadi unik
-gajiSchema.index({ nama_pegawai: 1, periode: 1 }, { unique: true });
+gajiSchema.index({ nip_pegawai: 1, periode: 1 }, { unique: true });
 
 module.exports = mongoose.model('Gaji', gajiSchema);
