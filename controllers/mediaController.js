@@ -93,7 +93,7 @@ module.exports = {
             if (Object.keys(req.query).length === 0) {
                 return res.json([]);
             }
-            let data = await Gaji.find(req.query).limit(10).sort({ date: -1 });
+            let data = await Gaji.find(req.query).limit(15).sort({ periode: -1 });
             res.status(200).json({
                 status: true,
                 message: "success",
