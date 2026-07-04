@@ -14,9 +14,12 @@ router.post('/v1/dokumen', verifyToken, controller.postDocument);
 router.delete('/v1/dokumen/:id', verifyToken, controller.deleteDocument);
 router.put('/v1/dokumen/:id', verifyToken, controller.updateDocument);
 
-router.post('/v1/upload/file/gaji', verifyToken, upload_file_excel.single('filename'), media.file);
-router.delete('/v1/upload/file/gaji', verifyToken, upload_file_excel.single('filename'), media.deleteFile);
-router.get('/v1/find/gaji/asn', upload_file_excel.single('filename'), media.findGajiAsn);
+router.post('/v1/upload/file/gaji', verifyToken, upload_file_excel.single('filename'), media.fileGaji);
+router.delete('/v1/upload/file/gaji', verifyToken, media.deleteFile);
+router.get('/v1/find/gaji/asn', media.findGajiAsn);
+router.post('/v1/upload/file/tpp', verifyToken, upload_file_excel.single('filename'), media.fileTPP);
+router.delete('/v1/upload/file/tpp', verifyToken, media.deleteFileTPP);
+router.get('/v1/find/gaji/tpp', media.findTPPAsn);
 
 router.get('/v1/logs', logger.getAllLogs);
 router.post('/v1/logs', logger.createLog);
