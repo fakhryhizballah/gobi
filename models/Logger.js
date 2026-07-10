@@ -19,8 +19,7 @@ const loggerSchema = new mongoose.Schema(
             default: Date.now
         },
     },
-    { strict: false },
-    { timestamps: true }
+    { strict: false, timestamps: true }
 );
 
 module.exports = mongoose.model('Logger', loggerSchema);
