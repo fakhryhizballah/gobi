@@ -125,7 +125,7 @@ async function crawaling(req, page, limit, periode) {
         }
         y = { ...y, ...dataDetail.data }
         mydata.push(y)
-        let process = await req.cache.incr(`simbg:process:${req.query.email}x:${page}:${limit}`);
+        let process = await req.cache.incr(`simbg:process:${req.query.email}:${page}:${limit}`);
         req.cache.expire(`simbg:process:${req.query.email}:${periode}:${page}:${limit}`, 60 * 60);
         console.log(`Proses ${process}`);
     }
