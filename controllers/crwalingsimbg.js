@@ -75,10 +75,10 @@ async function getstatus(token, uid) {
     }
 }
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-
-
+let onProsses = 0;
 async function crawaling(req, page, limit, periode) {
     // await cache.set(`simbg:test:${page}:${limit}`, "coba");
+    onProsses = 1;
     let auth = await req.cache.get(`simbg:user:${req.query.email}:${req.query.password}`);
     if (auth == null) {
         let akun = JSON.stringify({
@@ -125,13 +125,14 @@ async function crawaling(req, page, limit, periode) {
         }
         y = { ...y, ...dataDetail.data }
         mydata.push(y)
-        let process = await req.cache.incr(`simbg:process:${req.query.email}:${periode}:${page}:${limit}`);
+        let process = await req.cache.incr(`simbg:process:${req.query.email}x:${page}:${limit}`);
         req.cache.expire(`simbg:process:${req.query.email}:${periode}:${page}:${limit}`, 60 * 60);
         console.log(`Proses ${process}`);
     }
     let filename = await convertJsonToExcel(mydata, `${periode}-SIMBG-${page}-${limit}`);
     await req.cache.set(`simbg:data:${req.query.email}:${page}:${limit}`, filename);
     await req.cache.expire(`simbg:data:${req.query.email}:${page}:${limit}`, 60 * 60);
+    process = 0;
     const outputFilePath = path.join(__dirname, '../public/media', filename);
 }
 module.exports = {
@@ -154,6 +155,12 @@ module.exports = {
             }
             let prosess = await req.cache.get(`simbg:process:${req.query.email}:${date}:${page}:${limit}`);
             if (prosess == null) {
+                if (onProsses == 1) {
+                    return res.status(200).json({
+                        message: "Ditolak",
+                        status: "sedang memproses data lain"
+                    })
+                }
                 crawaling(req, page, limit, date);
                 return res.status(200).json({
                     message: "On Progress",
