@@ -103,7 +103,7 @@ async function crawaling(req, page, limit, periode) {
     if (datalist == null) {
         datalist = await getlist(auth, page, limit);
         await req.cache.json.set(`simbg:list:${req.query.email}:${page}:${limit}`, '$', datalist);
-        await req.cache.expire(`simbg:list:${req.query.email}:${page}:${limit}`, 60 * 60);
+        await req.cache.expire(`simbg:list:${req.query.email}:${page}:${limit}`, 60 * 60 * 2);
     }
     let mydata = [];
     for (let x of datalist.data) {
@@ -112,7 +112,7 @@ async function crawaling(req, page, limit, periode) {
         if (dataStatus == null) {
             dataStatus = await getstatus(auth, x.uid)
             await req.cache.json.set(`simbg:status:${req.query.email}:${x.uid}`, '$', dataStatus);
-            await req.cache.expire(`simbg:status:${req.query.email}:${x.uid}`, 60 * 30);
+            await req.cache.expire(`simbg:status:${req.query.email}:${x.uid}`, 60 * 60 * 4);
             await delay(2000);
         }
         y = { ...y, ...dataStatus.data }
@@ -120,18 +120,18 @@ async function crawaling(req, page, limit, periode) {
         if (dataDetail == null) {
             dataDetail = await getdetail(auth, x.uid)
             await req.cache.json.set(`simbg:detail:${req.query.email}:${x.uid}`, '$', dataDetail);
-            await req.cache.expire(`simbg:detail:${req.query.email}:${x.uid}`, 60 * 30);
+            await req.cache.expire(`simbg:detail:${req.query.email}:${x.uid}`, 60 * 60 * 4);
             await delay(3000);
         }
         y = { ...y, ...dataDetail.data }
         mydata.push(y)
         let process = await req.cache.incr(`simbg:process:${req.query.email}:${page}:${limit}`);
-        req.cache.expire(`simbg:process:${req.query.email}:${page}:${limit}`, 60 * 30);
+        req.cache.expire(`simbg:process:${req.query.email}:${page}:${limit}`, 60 * 60 * 24);
         console.log(`Proses ${process} ${req.query.email} ${page} ${limit}`);
     }
     let filename = await convertJsonToExcel(mydata, `${periode}-SIMBG-${page}-${limit}`);
     await req.cache.set(`simbg:data:${req.query.email}:${page}:${limit}`, filename);
-    await req.cache.expire(`simbg:data:${req.query.email}:${page}:${limit}`, 60 * 60);
+    await req.cache.expire(`simbg:data:${req.query.email}:${page}:${limit}`, 60 * 60 * 12);
     await req.cache.del(`simbg:process:${req.query.email}:${page}:${limit}`);
     process = 0;
     const outputFilePath = path.join(__dirname, '../public/media', filename);
