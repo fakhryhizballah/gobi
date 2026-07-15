@@ -81,13 +81,8 @@ async function convertExcelToJson(filename) {
 async function convertJsonToExcel(jsonData, filename) {
     console.log("Mulai konversi JSON ke Excel...");
 
-    // Tentukan nama/path file output
-    let datenow = new Date();
-    let date = datenow.toISOString().split('T')[0];
-    let time = datenow.toISOString().split('T')[1].split('.')[0];
-
     // Menggunakan backtick (`) untuk merangkai path dan nama file
-    const outputFilePath = path.join(__dirname, '../public/media', `${date}${time}${filename}.xlsx`);
+    const outputFilePath = path.join(__dirname, '../public/media', `${filename}.xlsx`);
 
     // Buat file Excel baru
     const workbook = new ExcelJS.Workbook();
@@ -102,7 +97,7 @@ async function convertJsonToExcel(jsonData, filename) {
 
     console.log("Konversi selesai. File tersimpan di:", outputFilePath);
 
-    return `${date}${time}${filename}.xlsx`;
+    return `${filename}.xlsx`;
 }
 
 module.exports = {

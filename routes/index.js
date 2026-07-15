@@ -31,5 +31,6 @@ router.post('/v1/counter/view', counter.postView);
 router.get('/v1/counter/view', counter.getPageViews);
 
 router.get('/v1/simbg', crawaling.getSIMBGE);
+router.get('/v1/simbg/test', crawaling.test);
 
 module.exports = router;
