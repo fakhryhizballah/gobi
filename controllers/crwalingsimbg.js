@@ -126,12 +126,13 @@ async function crawaling(req, page, limit, periode) {
         y = { ...y, ...dataDetail.data }
         mydata.push(y)
         let process = await req.cache.incr(`simbg:process:${req.query.email}:${page}:${limit}`);
-        req.cache.expire(`simbg:process:${req.query.email}:${periode}:${page}:${limit}`, 60 * 60);
-        console.log(`Proses ${process}`);
+        req.cache.expire(`simbg:process:${req.query.email}:${page}:${limit}`, 60 * 30);
+        console.log(`Proses ${process} ${req.query.email} ${page} ${limit}`);
     }
     let filename = await convertJsonToExcel(mydata, `${periode}-SIMBG-${page}-${limit}`);
     await req.cache.set(`simbg:data:${req.query.email}:${page}:${limit}`, filename);
     await req.cache.expire(`simbg:data:${req.query.email}:${page}:${limit}`, 60 * 60);
+    await req.cache.del(`simbg:process:${req.query.email}:${page}:${limit}`);
     process = 0;
     const outputFilePath = path.join(__dirname, '../public/media', filename);
 }
