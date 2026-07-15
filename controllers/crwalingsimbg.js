@@ -163,7 +163,7 @@ module.exports = {
             let persentase = (prosess / limit) * 100;
             return res.status(200).json({
                 message: "On Progress",
-                status: persentase + '%'
+                status: persentase.toFixed(2) + '%'
             })
             // return res.status(200).json({
             //     filename: filename,
