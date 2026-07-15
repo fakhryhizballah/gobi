@@ -5,6 +5,8 @@ const verifyToken = require('../middlewares/authMiddleware');
 const { upload, upload_file_excel } = require('../middlewares/storage');
 const media = require('../controllers/mediaController');
 const logger = require('../controllers/loggerController');
+const counter = require('../controllers/counters');
+const crawaling = require('../controllers/crwalingsimbg');
 
 
 
@@ -24,5 +26,10 @@ router.get('/v1/find/gaji/tpp', media.findTPPAsn);
 router.get('/v1/logs', logger.getAllLogs);
 router.post('/v1/logs', logger.createLog);
 router.delete('/v1/logs', verifyToken, logger.delLog);
+
+router.post('/v1/counter/view', counter.postView);
+router.get('/v1/counter/view', counter.getPageViews);
+
+router.get('/v1/simbg', crawaling.getSIMBGE);
 
 module.exports = router;

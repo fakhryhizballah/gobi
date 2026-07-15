@@ -12,7 +12,7 @@ const visitorSchema = new mongoose.Schema(
         },
         views: { type: Number, default: 0 },
         timestamps: {
-            type: Interger,
+            type: Date,
             required: true
         },
         visitorInfo: { type: mongoose.Schema.Types.Mixed },

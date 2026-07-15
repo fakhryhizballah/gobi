@@ -3,3 +3,5 @@
 /package-lock.json
 /uploads/*
 !/uploads/.gitkeep
+/public/media/*
+!/public/media/.gitkeep

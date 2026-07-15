@@ -1,12 +1,34 @@
 require('dotenv').config();
 const express = require('express');
 const routes = require('./routes/index');
+const { createClient } = require('redis');
 
 const app = express();
 
 app.use(express.json());
-app.use('/api/gobi', routes);
 
+const client = createClient({
+  password: process.env.REDIS_PASSWORD,
+  socket: {
+    host: process.env.REDIS_URL,
+    port: process.env.REDIS_URL_PORT
+  }
+});
+client.connect();
+client.on('connect', () => {
+  console.log('Redis client connected');
+});
+client.on('error', (err) => {
+  console.log('Something went wrong ' + err);
+});
+
+app.use((req, res, next) => {
+  req.cache = client;
+  next();
+});
+
+app.use('/api/gobi', routes);
+app.use('/api/gobi/static', express.static('public'));
 app.get('/', (req, res) => {
   res.json({ message: 'REST API is running' });
 });
