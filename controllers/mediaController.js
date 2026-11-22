@@ -1,4 +1,4 @@
-require('dotenv').config();
+
 const {convertExcelToJson} = require('../helpers/tojson');
 const Gaji = require('../models/Gaji');
 const Tpp = require('../models/Tpp');
