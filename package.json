@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node --env-file=.env index.js",
-    "pm2": "pm2 start app.js --name gobi --node-args='--env-file=.env'",
+    "dev": "node --env-file=.env index.js --watch",
+    "pm2": "pm2 start index.js --name gobi --node-args='--env-file=.env'",
     "test": "jest --runInBand"
   },
   "keywords": [],
